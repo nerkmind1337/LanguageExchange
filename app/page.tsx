@@ -1,9 +1,17 @@
+'use client';
+
 import Link from "next/link"
 
 import { siteConfig } from "@/config/site"
 import { buttonVariants } from "@/components/ui/button"
+import { signIn, signOut } from "next-auth/react";
+import { UserTest } from "@/components/user-test"
+import { useSession } from "next-auth/react";
 
 export default function IndexPage() {
+   const { data: session } =  useSession();
+
+
   return (
     <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
       <div className="flex max-w-[980px] flex-col items-start gap-2">
@@ -25,6 +33,13 @@ export default function IndexPage() {
         >
           Documentation
         </Link>
+         <button style={{ marginRight: 10 }} onClick={() => signIn()}>
+          Sign in
+        </button>
+        <button style={{ marginRight: 10 }} onClick={() => signOut()}>
+          Sign Out
+        </button>
+        
         <Link
           target="_blank"
           rel="noreferrer"
@@ -33,6 +48,9 @@ export default function IndexPage() {
         >
           GitHub
         </Link>
+
+           <h1>Client Session</h1>
+      <pre>{JSON.stringify(session)}</pre>
       </div>
     </section>
   )
